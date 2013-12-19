@@ -1,5 +1,7 @@
-var express = require('express'),
-	exphbs  = require('express3-handlebars'),
+var env = require('./config/env'),
+	util = require('util'),
+	express = require('express'),
+	exphbs = require('express3-handlebars'),
 	getTemplates = require('./getTemplates'),
 	app = express();
 
@@ -29,10 +31,10 @@ getTemplates(function(templates) {
 	/**
 	 * Have server listen to port
 	 */
-	app.listen(8080);
+	app.listen(env.port);
 
 	/**
 	 * Notify dev
 	 */
-	console.log('Server listening at localhost:8080...');
+	console.log(util.format('Server listening at %s:%d ...', env.host, env.port));
 });
