@@ -3,9 +3,9 @@
 *    @author: kuakman | https://github.com/kuakman
 **/
 require.config({
-    
+
     paths: {
-        lib: 'libraries',
+        lib: '../../libraries',
         /** Controllers **/
         controller: 'application/controller',
         /** Models **/
@@ -15,14 +15,14 @@ require.config({
         /** Views **/
         view: 'application/view'
     },
-    
+
     shim: {
         /** Minimum Third-Party Libraries use for the app **/
         'lib/backbone/backbone': ['lib/underscore/underscore'],
         'lib/underscore/underscore': ['lib/jquery/jquery'],
         'lib/jquery/jquery': []
     }
-    
+
 });
 
 /**
@@ -30,10 +30,10 @@ require.config({
 *    @author kuakman | https://github.com/kuakman
 **/
 require(['controller/controller', 'view/view'], function(Controller, View) {
-    
+
     // Test
     console.log('Testing Modules...');
     console.log('Controller Constructor: ', Controller);
     console.log('View Constructor: ', View);
-    
+
 });

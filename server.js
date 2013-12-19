@@ -12,7 +12,11 @@ var env = require('./config/env'),
 app.set('views', __dirname + '/examples/');
 app.engine('.hbs', exphbs({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
-app.use(express.static(path.resolve(__dirname + '/examples/getting-started/', 'public')));
+
+/**
+ * Setup static files path
+ */
+app.use(express['static'](path.resolve(__dirname + '/public')));
 
 /**
  * Setup routes
