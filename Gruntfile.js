@@ -6,10 +6,10 @@ module.exports = function(grunt) {
 		requirejs: {
 			compile: {
 				options: {
-					baseUrl: 'public/getting-started/js',
-					mainConfigFile: 'public/getting-started/js/app.js',
+					baseUrl: 'public/js',
+					mainConfigFile: 'public/js/app.js',
 					name: 'app',
-					out: 'public/getting-started/js/<%= pkg.name %>-<%= pkg.version %>.js',
+					out: 'public/js/<%= pkg.name %>-<%= pkg.version %>.js',
 					optimize: 'none',
 					done: function(done, output) { }
 				}

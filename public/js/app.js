@@ -5,7 +5,7 @@
 require.config({
 
     paths: {
-        lib: '../../libraries',
+        lib: '../libraries',
         /** Controllers **/
         controller: 'application/controller',
         /** Models **/
@@ -19,7 +19,8 @@ require.config({
     shim: {
         /** Minimum Third-Party Libraries use for the app **/
         'lib/backbone/backbone': ['lib/underscore/underscore'],
-        'lib/underscore/underscore': ['lib/jquery/jquery'],
+        'lib/underscore/underscore': ['lib/bootstrap/dist/js/bootstrap'],
+        'lib/bootstrap/dist/js/bootstrap': ['lib/jquery/jquery'],
         'lib/jquery/jquery': []
     }
 
