@@ -16,11 +16,13 @@ module.exports = function(grunt) {
 			}
 		}
 	});
-
+    
+    // Labs Scaffold Task
+    grunt.loadTasks('application/scaffold');
+    
 	// Load plugins
-	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
-
-	// Default task(s).
+    
+    // Default task(s).
 	grunt.registerTask('default', ['requirejs']);
 };
