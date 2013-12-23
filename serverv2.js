@@ -23,7 +23,7 @@ app.configure(function() {
     app.set('view engine', '.hbs');
    
     // HandleBars Layouts
-    // ENHACEMENT: Move this to a different Location
+    // ENHANCEMENT: Move this to a different Location
     require('handlebars-layouts')(handlebars);
     handlebars.registerPartial('master', fs.readFileSync('application/view/master.hbs', 'utf8'));
     handlebars.registerPartial('layout', fs.readFileSync('application/view/layout.hbs', 'utf8'));

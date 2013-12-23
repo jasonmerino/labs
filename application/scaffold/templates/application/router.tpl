@@ -1,12 +1,12 @@
 /**
-*    <%= name %>Router Class
+*    <%= cname %>Router Class
 *    @namespace {<%= namespace %>}
 *    @author <%= authorName %> <<%=authorEmail %>>
 *    @desc <Description>
 **/
 
 /**
-*    @class <%= cname %>
+*    @class <%= cname %>Router
 *    @classdesc <ClassDescription>
 **/
 var <%= cname %> = Router.extend({

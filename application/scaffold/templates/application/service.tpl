@@ -1,12 +1,12 @@
 /**
-*    <%= name %>Service Class
+*    <%= cname %>Service Class
 *    @namespace {<%= namespace %>}
 *    @author <%= authorName %> <<%=authorEmail %>>
 *    @desc <Description>
 **/
 
 /**
-*    @class <%= cname %>
+*    @class <%= cname %>Service
 *    @classdesc <ClassDescription>
 **/
 var <%= cname %>Service = Labs.Model.extend({

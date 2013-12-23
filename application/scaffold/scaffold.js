@@ -1,6 +1,8 @@
 /**
 *    Scaffold Tasks
-*    @author kuakman <3dimentionar@gmail.com> | https://github.com/kuakman    
+*    @author kuakman <3dimentionar@gmail.com> | https://github.com/kuakman
+*    @desc Scaffold tools for generating template for the MVSC (Model, View, Service, Controller (Router)).
+*    NOTE: Need to improve the processing logic here. There is a lot that it can be reusable.
 **/
 
 module.exports = function(grunt) {
@@ -18,7 +20,11 @@ module.exports = function(grunt) {
             options: {
                 app: 'application/<%= layer %>',
                 js: 'public/js/application/<%= layer %>',
-                test: 'test/<%= layer %>'    
+                test: 'test/<%= layer %>'
+            },
+            author: {
+                name: 'kuakman',
+                email: '3dimentionar@gmail.com'
             }
         }
     });
@@ -40,10 +46,16 @@ module.exports = function(grunt) {
         return exist;
     }
     
+    /**
+    *    Get File extension
+    **/
     function getExtension(l, op) {
         return (l == 'view' && op == 'app') ? '.hbs' : '.js';
     }
     
+    /**
+    *    Build Template Path
+    **/
     function buildTplPath(l, op) {
         var tplPath = grunt.config.get('scaffold.templates') + '/';
         if(op == 'app') {
@@ -56,16 +68,28 @@ module.exports = function(grunt) {
         return tplPath;
     }
     
+    function applyTemplate(contents, layer, name) {
+        var data = {
+            authorName: grunt.config.get('scaffold.author').name,
+            authorEmail: grunt.config.get('scaffold.author').email,
+            namespace: 'application.' + layer + '.' + grunt.util._.str.capitalize(name) + grunt.util._.str.capitalize(layer),
+            name: name,
+            cname: grunt.util._.str.capitalize(name)
+        };
+        return grunt.template.process(contents, { data: data });
+    }
+    
     /**
     *    Add Layer
     **/
     function add(l, n, op) {
+        if(op == 'app' && l == 'controller') l = 'router';
         var destOpt = 'scaffold.options.' + op,
             dest = grunt.template.process(grunt.config.get(destOpt), { layer: l }),
             file = (dest + l + '/' + n + '_' + l + getExtension(l, op)),
-            tpl = buildTplPath(l, op); 
+            tpl = buildTplPath(l, op);
         if(!grunt.file.exists(tpl)) return false;
-        grunt.file.copy(tpl, file);
+        grunt.file.copy(tpl, file, { process: function(contents, tplFile) { return applyTemplate(contents, l, n); } });
         grunt.log.ok('Generated: ' + tpl, ' -> ', file);
         return true;
     }
@@ -74,6 +98,7 @@ module.exports = function(grunt) {
     *    Remove Layer
     **/
     function remove(l, n, op) {
+        if(op == 'app' && l == 'controller') l = 'router';
         var destOpt = ('scaffold.options.' + op),
             dest = grunt.template.process(grunt.config.get(destOpt), { layer: l }),
             file = (dest + l + '/' + n + '_' + l + getExtension());
