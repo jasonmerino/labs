@@ -1,6 +1,6 @@
 {
 	"host": "localhost",
 	"port": 8080,
-    "liveedit": true,
+    "livereload": true,
     "debug": true
 }

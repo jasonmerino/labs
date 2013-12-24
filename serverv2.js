@@ -57,7 +57,7 @@ app.configure(function() {
     
     app.listen(env.port, function() {
         /** Extra Features **/
-        if(env.liveedit) {} // LiveEdit.launch(app);
+        if(env.livereload) {} // LiveEdit.launch(app);
         
         /** Notify Dev **/
         console.log(util.format('Server listening at %s:%d ...', env.host, env.port));

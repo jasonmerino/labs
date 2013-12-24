@@ -1,6 +1,0 @@
-Labs Scaffold Documentation
-===========================
-
-Available Commands:
-
-Write documentation...
