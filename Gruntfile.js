@@ -1,5 +1,13 @@
+/**
+*    Grunt Configuration File
+*    @author {Name} | {<email>}
+**/
 module.exports = function(grunt) {
-
+    
+    var colors = require('colors'),
+        env = require('./config/env'),
+        _ = grunt.util._;
+    
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -48,18 +56,75 @@ module.exports = function(grunt) {
                     livereload: true, // Start a live reload server on the default port 35729
                 }
             }
+        },
+        scaffold: {
+            help: grunt.file.read('lib/scaffold/help.txt'),
+            templates: 'lib/scaffold/templates',
+            layers: ['model', 'controller', 'service', 'view'],
+            options: {
+                app: 'application/<%= layer %>',
+                js: 'public/js/application/<%= layer %>',
+                test: 'test/<%= layer %>'
+            },
+            author: {
+                name: 'kuakman',
+                email: '3dimentionar@gmail.com'
+            }
+        },
+        test: {
+            options: {
+                path: 'test',
+                reporter: 'spec', // Available options 'spec', 'dot', 'progress', 'landing', 'list', 'min' and more...
+                coveragePath: 'public/coverage',
+                coverageExcludeFiles: ['util/class.js', 'util/directory.js']
+            }
+        },
+        build: {
+            options: {
+                cssminify: true
+            }
+        },
+        run: {
+            options: {
+                appfile: 'serverv2.js'
+            }
         }
 	});
     
-    // Labs Scaffold Task
+    // Custom Tasks
     grunt.loadTasks('lib/scaffold');
+    grunt.loadTasks('lib/unittest');
+    grunt.loadTasks('lib/build');
     
 	// Load plugins
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-watch');
+            
+    // Run Task
+    grunt.registerTask('run', 'Run Server', function() {
+        var cfg = this.options();
+        
+        // Unit Test done
+        grunt.event.once('test:success', _.bind(function() {
+            grunt.task.run('build');
+            return true;
+        }, this));
+        
+        // Build done
+        grunt.event.once('build:success', _.bind(function() {
+            var args = [cfg.appfile];
+            if(env.debug) args.push('debug');
+            
+            grunt.util.spawn({ cwd: 'node', args: args });
+            if(env.livereload) grunt.task.run('watch');
+            return true;
+        }, this));
+        
+        grunt.task.run('test', env);
+    });
     
     // Default task(s).
-	grunt.registerTask('default', ['requirejs']);
+	grunt.registerTask('default', ['run']);
 };
