@@ -10,6 +10,7 @@ module.exports = function(grunt) {
     
 	// Project configuration.
 	grunt.initConfig({
+        apppath: __dirname,
 		pkg: grunt.file.readJSON('package.json'),
         sass: {
             dist: {
@@ -119,10 +120,12 @@ module.exports = function(grunt) {
             
             grunt.util.spawn({ cwd: 'node', args: args });
             if(env.livereload) grunt.task.run('watch');
+            grunt.log.writeln('Completed Application Run.'.cyan);
             return true;
         }, this));
         
-        grunt.task.run('test', env);
+        grunt.log.writeln('Executing Application Run -> '.yellow);
+        grunt.task.run('test');
     });
     
     // Default task(s).

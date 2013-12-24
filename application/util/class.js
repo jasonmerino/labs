@@ -176,7 +176,7 @@ var extend = function(protoProps, staticProps) {
 /**
 *    Service Class
 **/
-Labs.Service = Labs.Model function(attr) {
+Labs.Service = Labs.Model = function(attr) {
     attr || (attr = {});
     this.attributes = _.extend({}, attr);
     this.set(attr);
