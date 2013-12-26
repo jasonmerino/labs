@@ -11,7 +11,10 @@ module.exports = function(grunt) {
     
 	// Project configuration.
 	grunt.initConfig({
-        apppath: __dirname,
+        app: {
+            path: __dirname,
+            folder: 'application'
+        },
 		pkg: grunt.file.readJSON('package.json'),
         scaffold: {
             help: grunt.file.read('lib/scaffold/help.txt'),

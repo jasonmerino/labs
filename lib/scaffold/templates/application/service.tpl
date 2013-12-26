@@ -4,12 +4,14 @@
 *    @author <%= authorName %> <<%=authorEmail %>>
 *    @desc <Description>
 **/
+var Labs = require('../util/class'),
+    _ = require('underscore');
 
 /**
 *    @class <%= cname %>Service
 *    @classdesc <ClassDescription>
 **/
-var <%= cname %>Service = Labs.Model.extend({
+var <%= cname %>Service = Labs.Service.extend({
     
     /**
     *    @constructor

@@ -4,6 +4,9 @@
 *    @author <%= authorName %> <<%=authorEmail %>>
 *    @desc <Description>
 **/
+var Router = require('../index'),
+    _ = require('underscore'),
+    _s = require('underscore.string');
 
 /**
 *    @class <%= cname %>Router

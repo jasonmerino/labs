@@ -4,6 +4,8 @@
 *    @author <%= authorName %> <<%=authorEmail %>>
 *    @desc <Description>
 **/
+var Labs = require('../util/class'),
+    _ = require('underscore');
 
 /**
 *    @class <%= cname %>Model
