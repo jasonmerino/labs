@@ -6,58 +6,13 @@ module.exports = function(grunt) {
     
     var colors = require('colors'),
         env = require('./config/env'),
-        _ = grunt.util._;
+        _ = grunt.util._,
+        nodeprocess = null;
     
 	// Project configuration.
 	grunt.initConfig({
         apppath: __dirname,
 		pkg: grunt.file.readJSON('package.json'),
-        sass: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: 'application/sass',
-                    src: ['*.scss'],
-                    dest: 'public/css',
-                    ext: '.css'
-                }]
-            }
-        },
-        cssmin: {
-            add_banner: {
-                options: {
-                    banner: '/* <%= pkg.name %> | <%= grunt.template.today("mm-dd-yyyy") %> */'
-                }  
-            },
-            minify: {
-                expand: true,
-                cwd: 'public/css/',
-                src: ['*.css', '!*.min.css'],
-                dest: 'public/css/',
-                ext: '.min.css'
-            }  
-        },
-		requirejs: {
-			compile: {
-				options: {
-					baseUrl: 'public/js',
-					mainConfigFile: 'public/js/app.js',
-					name: 'app',
-					out: 'public/js/<%= pkg.name %>-<%= pkg.version %>.js',
-					optimize: 'none',
-					done: function(done, output) { }
-				}
-			}
-		},
-        watch: {
-            css: {
-                files: ['application/sass/*.scss'],
-                tasks: ['sass', 'cssmin'],
-                options: {
-                    livereload: true, // Start a live reload server on the default port 35729
-                }
-            }
-        },
         scaffold: {
             help: grunt.file.read('lib/scaffold/help.txt'),
             templates: 'lib/scaffold/templates',
@@ -72,6 +27,43 @@ module.exports = function(grunt) {
                 email: '3dimentionar@gmail.com'
             }
         },
+        sass: {
+                dist: {
+                    files: [{
+                        expand: true,
+                        cwd: 'application/sass',
+                        src: ['*.scss'],
+                        dest: 'public/css',
+                        ext: '.css'
+                    }]
+                }
+            },
+            cssmin: {
+                add_banner: {
+                    options: {
+                        banner: '/* <%= pkg.name %> | <%= grunt.template.today("mm-dd-yyyy") %> */'
+                    }  
+                },
+                minify: {
+                    expand: true,
+                    cwd: 'public/css/',
+                    src: ['*.css', '!*.min.css'],
+                    dest: 'public/css/',
+                    ext: '.min.css'
+                }  
+            },
+            requirejs: {
+                compile: {
+                    options: {
+                        baseUrl: 'public/js',
+                        mainConfigFile: 'public/js/app.js',
+                        name: 'app',
+                        out: 'public/js/<%= pkg.name %>-<%= pkg.version %>.js',
+                        optimize: 'none',
+                        done: function(done, output) { }
+                    }
+                }
+            },
         test: {
             options: {
                 path: 'test',
@@ -82,7 +74,16 @@ module.exports = function(grunt) {
         },
         build: {
             options: {
-                cssminify: true
+                tasks: ['sass', 'cssmin', 'requirejs']
+            }
+        },
+        watch: {
+            css: {
+                files: ['application/sass/*.scss'],
+                tasks: ['sass', 'cssmin'],
+                options: {
+                    livereload: true, // Start a live reload server on the default port 35729
+                }
             }
         },
         run: {
@@ -117,11 +118,10 @@ module.exports = function(grunt) {
         grunt.event.once('build:success', _.bind(function() {
             var args = [cfg.appfile];
             if(env.debug) args.push('debug');
-            
-            grunt.util.spawn({ cwd: 'node', args: args });
             if(env.livereload) grunt.task.run('watch');
+            if(nodeprocess) nodeprocess.kill();
+            nodeprocess = grunt.util.spawn({ cmd: 'node', args: args, opts: { stdio: 'inherit' } });
             grunt.log.writeln('Completed Application Run.'.cyan);
-            return true;
         }, this));
         
         grunt.log.writeln('Executing Application Run -> '.yellow);
