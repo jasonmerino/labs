@@ -11,7 +11,13 @@ define([], function() {
     *    @class <%= cname %>Controller
     *    @classdesc <ClassDescription>
     **/
-    var <%= cname %>Controller = Backbone.Controller.extend({
+    var <%= cname %>Controller = Backbone.Router.extend({
+        
+        /**
+        *    Routes
+        *    @var {Object} routes
+        **/
+        routes: { },
         
         /**
         *    @constructor
