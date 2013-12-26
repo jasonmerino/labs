@@ -28,42 +28,42 @@ module.exports = function(grunt) {
             }
         },
         sass: {
-                dist: {
-                    files: [{
-                        expand: true,
-                        cwd: 'application/sass',
-                        src: ['*.scss'],
-                        dest: 'public/css',
-                        ext: '.css'
-                    }]
-                }
-            },
-            cssmin: {
-                add_banner: {
-                    options: {
-                        banner: '/* <%= pkg.name %> | <%= grunt.template.today("mm-dd-yyyy") %> */'
-                    }  
-                },
-                minify: {
+            dist: {
+                files: [{
                     expand: true,
-                    cwd: 'public/css/',
-                    src: ['*.css', '!*.min.css'],
-                    dest: 'public/css/',
-                    ext: '.min.css'
+                    cwd: 'application/sass',
+                    src: ['**/*.scss'],
+                    dest: 'public/css',
+                    ext: '.css'
+                }]
+            }
+        },
+        cssmin: {
+            add_banner: {
+                options: {
+                    banner: '/* <%= pkg.name %> | <%= grunt.template.today("mm-dd-yyyy") %> */'
                 }  
             },
-            requirejs: {
-                compile: {
-                    options: {
-                        baseUrl: 'public/js',
-                        mainConfigFile: 'public/js/app.js',
-                        name: 'app',
-                        out: 'public/js/<%= pkg.name %>-<%= pkg.version %>.js',
-                        optimize: 'none',
-                        done: function(done, output) { }
-                    }
+            minify: {
+                expand: true,
+                cwd: 'public/css/',
+                src: ['*.css', '!*.min.css'],
+                dest: 'public/css/',
+                ext: '.min.css'
+            }  
+        },
+        requirejs: {
+            compile: {
+                options: {
+                    baseUrl: 'public/js',
+                    mainConfigFile: 'public/js/app.js',
+                    name: 'app',
+                    out: 'public/js/<%= pkg.name %>-<%= pkg.version %>.js',
+                    optimize: 'none',
+                    done: function(done, output) { }
                 }
-            },
+            }
+        },
         test: {
             options: {
                 path: 'test',
@@ -79,11 +79,19 @@ module.exports = function(grunt) {
         },
         watch: {
             css: {
-                files: ['application/sass/*.scss'],
-                tasks: ['sass', 'cssmin'],
-                options: {
-                    livereload: true, // Start a live reload server on the default port 35729
-                }
+                files: ['application/sass/**/*.scss'],
+                tasks: ['sass'],
+                options: { livereload: 4000 } // Start a live reload server on the default port 35729
+            },
+            views: {
+                files: ['application/view/**/*.hbs'],
+                tasks: ['reload'],
+                options: { livereload: 4000 }
+            },
+            js: {
+               files: ['public/js/**/*.js'],
+               tasks: ['reload'],
+               options: { livereload: 4000 }
             }
         },
         run: {
@@ -103,7 +111,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-watch');
-            
+    
+    // Reload Task (This task doen't do anything because the task watch doesn't allow to pass a empty array).
+    grunt.registerTask('reload', 'Triggers Watch Reload', function() {
+        grunt.log.writeln('Reloading Connection Instances...'.magenta);
+    });
+    
     // Run Task
     grunt.registerTask('run', 'Run Server', function() {
         var cfg = this.options();

@@ -74,7 +74,7 @@ var Router = Labs.Service.extend({
         if(!opts.action) throw new Error('\'action\' parameter is required in order to render the view properly.');
         if(!opts.model) opts.model = {};
         
-        var params = { action: opts.action, path: this.viewPath, model: opts.model };
+        var params = { action: opts.action, title: _s.capitalize(opts.action), path: this.viewPath, model: opts.model };
         res.render(this.viewPath + '/' + opts.action, params);
     }
     

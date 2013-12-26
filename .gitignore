@@ -3,3 +3,4 @@ application-cov/
 public/libraries/
 public/js/labs*.js
 public/coverage/coverage.html
+.sass-cache/

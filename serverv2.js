@@ -37,11 +37,11 @@ app.configure(function() {
     /** Process Routes **/
     router.configure({ app: app, path: path.resolve(__dirname, 'application/router')});
     
-    /** Libraries added by default into Handlerbars template engine **/
+    /** Variables added into Handlerbars template engine **/
     app.locals.debug = env.debug;
-    app.locals._ = require('underscore');
-    app.locals._s = require('underscore.string');
-
+    app.locals.livereload = env.livereload;
+    
+    /** Static Files Express Handler **/
     app.use(express.static(path.resolve(__dirname, 'public')));
     
     app.configure('development', function() {
@@ -56,9 +56,6 @@ app.configure(function() {
     });
     
     app.listen(env.port, function() {
-        /** Extra Features **/
-        if(env.livereload) {} // LiveEdit.launch(app);
-        
         /** Notify Dev **/
         console.log(util.format('Server listening at %s:%d ...', env.host, env.port));
     });

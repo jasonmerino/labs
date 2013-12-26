@@ -2,11 +2,18 @@
 
     {{#append "head"}}
         <head>
-            <title>Labs | {{action}}</title>
-            <meta charset="utf-8"></meta>
-            <link href="css/common.css" rel="stylesheet" type="text/css" />
-            {{#block "extraCss"}}{{/block}}
-            <link rel="shortcut icon" href="/img/favicon.ico" />
+            <title>Labs | {{title}}</title>
+            <meta charset="utf-8">
+            {{#if debug}}
+                <link href="libraries/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+                <link href="css/common.css" rel="stylesheet" type="text/css" />
+                <link href="css/device.css" rel="stylesheet" type="text/css" />
+                <link href="css/{{action}}/{{action}}.css" rel="stylesheet" type="text/css" />
+            {{else}}
+                <link href="libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+                <link href="css/{{cssbundle}}" rel="stylesheet" type="text/css" />
+            {{/if}}
+            <link rel="shortcut icon" href="/images/favicon.ico" />
         </head>
     {{/append}}
     
@@ -24,11 +31,11 @@
     
     {{#append "scripts"}}
         {{#if debug}}
-            <script type="text/javascript" data-main="js/app.js" src="js/libraries/requirejs/require.js"></script>
+            {{#if livereload}}<script src="//localhost:4000/livereload.js"></script>{{/if}}
+            <script type="text/javascript" data-main="js/app.js" src="libraries/requirejs/require.js"></script>
         {{else}}
-            <script type="text/javascript" src="js/labs-0.0.1.js"></script>
+            <script type="text/javascript" src="js/{{jsbundle}}"></script>
         {{/if}}
-        {{#if livereload}}<script src="http://localhost:35729/livereload.js"></script>{{/if}}
     {{/append}}
     
 {{/extend}}

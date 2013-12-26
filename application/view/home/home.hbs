@@ -1,19 +1,15 @@
 {{#extend "master"}}
     
-    {{#append "extraCss"}}
-         <link href="css/home/home.css" rel="stylesheet" type="text/css" />
-    {{/append}}
-    
     {{#append "header"}}
-         <h2>Home | {{action}}</h2>
+         <h2>Home | {{title}}</h2>
     {{/append}}
 
     {{#append "content"}}
-         <p class="content">Home | Content</p>
+         <p>Home | Content</p>
     {{/append}}
     
     {{#append "footer"}}
-         <p class="footer">Home | Footer</p>
+         <p>Home | Footer</p>
     {{/append}}
     
 {{/extend}}
