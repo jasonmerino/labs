@@ -23,7 +23,7 @@ var libpath = process.env['UT'] ? '<%= appfolder %>-cov/' : '<%= appfolder %>/',
 *        - should.js (https://github.com/visionmedia/should.js)
 *    7) If you don't follow these instructions, please go to (http://24.media.tumblr.com/tumblr_ljx6bevWRs1qb42o2o1_500.gif)
 **/
-var <%= cname %> = require(path.resolve(libpath, '<%= layer %>/<%= name %>_<%= layer%>'));
+var <%= cname %><%= clayer %> = require(path.resolve(libpath, '<%= layer %>/<%= name %>/<%= name %>'));
 
 /**
 *    @class <%= cname %><%= clayer %>Test
