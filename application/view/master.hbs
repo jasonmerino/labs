@@ -32,6 +32,7 @@
         {{#if debug}}
             {{#if livereload}}<script src="//localhost:4000/livereload.js"></script>{{/if}}
             <script type="text/javascript" data-main="js/app.js" src="libraries/requirejs/require.js"></script>
+            {{#block "JSmodule"}}{{/block}}
         {{else}}
             <script type="text/javascript" src="js/{{jsbundle}}"></script>
         {{/if}}

@@ -27,14 +27,9 @@ require.config({
 });
 
 /**
-*    Application Module
-*    @author kuakman | https://github.com/kuakman
+*    Error Handling
 **/
-require(['controller/controller', 'view/view'], function(Controller, View) {
-
-    // Test
-    console.log('Testing Modules...');
-    console.log('Controller Constructor: ', Controller);
-    console.log('View Constructor: ', View);
-
-});
+requirejs.onError = function(err) {
+    console.log("RequireTypeError: ", err.requireType);
+    if (err.requireType === 'timeout') console.log('Modules: ' + err.requireModules);
+};

@@ -35,7 +35,18 @@ define([], function() {
         *    @static
         *    @var {Object} EVENTS
         **/
-        EVENTS: { }
+        EVENTS: { },
+        
+        /**
+        *    Run
+        *    @static
+        *    @method run
+        *    @param opts {Object}
+        *    @desc Static View initializer
+        **/
+        run: function(opts) {
+            return new <%= cnameView %>(opts);
+        }
         
     });
     
