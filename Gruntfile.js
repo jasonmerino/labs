@@ -1,6 +1,12 @@
 /**
 *    Grunt Configuration File
-*    @author {Name} | {<email>}
+*    @author kuakman | <3dimentionar@gmail.com>
+*    Notes:
+*    To Fix:
+*    1) Live Reload: Handlebars templates (*.hbs) are pre-compilated when node starts.
+*    So, if a developers adds a new template while node is running, they are forced to restart node (or re-run grunt:run)
+*    to make that new template available.
+*    Research to see what's possible...
 **/
 module.exports = function(grunt) {
     
@@ -13,18 +19,15 @@ module.exports = function(grunt) {
 	grunt.initConfig({
         app: {
             path: __dirname,
-            folder: 'application'
+            appfolder: 'application',
+			jsfolder: 'public/js',
+			testfolder: 'test'
         },
 		pkg: grunt.file.readJSON('package.json'),
         scaffold: {
             help: grunt.file.read('lib/scaffold/help.txt'),
-            templates: 'lib/scaffold/templates',
+            tplsPath: 'lib/scaffold/templates',
             layers: ['model', 'controller', 'service', 'view'],
-            options: {
-                app: 'application/<%= layer %>',
-                js: 'public/js/application/<%= layer %>',
-                test: 'test/<%= layer %>'
-            },
             author: {
                 name: 'kuakman',
                 email: '3dimentionar@gmail.com'

@@ -23,7 +23,8 @@ app.configure(function() {
     app.set('view engine', '.hbs');
    
     // HandleBars Layouts
-    // ENHANCEMENT: Move this to a different Location
+	// FIXME: Research if we can point a reference to the handlebars version that express3-handlebars is using.
+	// I checked the code and it has that in a private scope.
     require('handlebars-layouts')(handlebars);
     handlebars.registerPartial('master', fs.readFileSync('application/view/master.hbs', 'utf8'));
     handlebars.registerPartial('layout', fs.readFileSync('application/view/layout.hbs', 'utf8'));

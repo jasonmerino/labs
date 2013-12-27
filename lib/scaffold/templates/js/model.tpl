@@ -1,5 +1,5 @@
 /**
-*    <%= cname %> Module
+*    <%= cname %>Model Module
 *    @namespace {<%= namespace %>}
 *    @author <%= authorName %> <<%=authorEmail %>>
 *    @dependencies <ListOfDependencies>
