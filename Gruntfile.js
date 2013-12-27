@@ -102,7 +102,7 @@ module.exports = function(grunt) {
         },
         run: {
             options: {
-                appfile: 'serverv2.js'
+                appfile: 'server.js'
             }
         }
 	});
