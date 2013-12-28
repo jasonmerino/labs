@@ -31,7 +31,7 @@
     
     {{#append "scripts"}}
         {{#if debug}}
-            {{#if livereload}}<script src="http://white-harbor-nodejs-61041.usw1.actionbox.io:4000/livereload.js"></script>{{/if}}
+            {{#if livereload}}<script src="http://localhost:4000/livereload.js"></script>{{/if}}
             <script type="text/javascript" data-main="js/app.js" src="libraries/requirejs/require.js"></script>
         {{else}}
             <script type="text/javascript" src="js/{{jsbundle}}"></script>
