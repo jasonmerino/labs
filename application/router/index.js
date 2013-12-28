@@ -4,8 +4,8 @@
 **/
 var fs = require('fs'),
     path = require('path'),
+	Labs = require('../util/class'),
     Directory = require('../util/directory'),
-    Labs = require('../util/class'),
     _ = require('underscore'),
     _s = require('underscore.string');
 
@@ -36,6 +36,7 @@ var Router = Labs.Service.extend({
     *    @desc TODO
     **/
     _process: function() {
+		console.log('\n');
         if(this.routes) {
             console.log(('-> Routes for [' + this.viewPath + ']'));
             _.each(this.routes, function(r) {

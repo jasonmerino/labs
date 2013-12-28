@@ -14,16 +14,17 @@
     
     {{#append "JSmodule"}}
         <script type="text/javascript">
-            $(document).ready(function() {
+            function initializer () {
                 /** RequireJS MVC **/
-                require(['model/<%= name %>_model', 'view/<%= name %>view', 'controller/<%= name %>_controller', 'service/<%= name %>_service'], function(M, V, C, S) {
+                require(['model/<%= name %>/<%= name %>_model', 'view/<%= name %>/<%= name %>_view', 'controller/<%= name %>/<%= name %>_controller', 'service/<%= name %>/<%= name %>_service'], function(M, V, C, S) {
                     // TODO: Validation
+					console.log(M,V,C,S);
                     var module = V.run({
                         model: new M(),
                         controller: new C({ service: new S() })
                     }).render();
                 });
-            });
+            };
         </script>
     {{/append}}
     

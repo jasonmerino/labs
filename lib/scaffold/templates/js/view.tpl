@@ -5,7 +5,7 @@
 *    @dependencies <ListOfDependencies>
 *    @desc <Description>
 **/
-define([], function() {
+define(['lib/backbone/backbone'], function() {
     
     /**
     *    @class <%= cname %>View
@@ -45,7 +45,7 @@ define([], function() {
         *    @desc Static View initializer
         **/
         run: function(opts) {
-            return new <%= cnameView %>(opts);
+            return new <%= cname %>View(opts);
         }
         
     });

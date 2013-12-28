@@ -5,7 +5,7 @@
 *    @dependencies <ListOfDependencies>
 *    @desc <Description>
 **/
-define([], function() {
+define(['lib/backbone/backbone'], function() {
     
     /**
     *    @class <%= cname %>Controller

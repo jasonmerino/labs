@@ -42,13 +42,13 @@ app.configure(function() {
     app.use(express.static(path.resolve(__dirname, 'public')));
     
     app.configure('development', function() {
-        console.log('\n\nRunning on Development Environment >');
+        console.log('\nRunning on Development Environment >');
         app.use(express.logger('development'));
         app.use(express.errorHandler({ dumExceptions: true, showStack: true }));
     });
     
     app.configure('production', function() {
-        console.log('\n\nRunning on Production Environment >');
+        console.log('\nRunning on Production Environment >');
 		app.use(express.logger('production'));
         app.use(express.errorHandler());
     });

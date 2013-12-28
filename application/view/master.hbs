@@ -13,6 +13,7 @@
                 <link href="css/{{cssbundle}}" rel="stylesheet" type="text/css" />
             {{/if}}
             <link rel="shortcut icon" href="/images/favicon.ico" />
+			{{#block "JSmodule"}}{{/block}}
         </head>
     {{/append}}
     
@@ -30,9 +31,8 @@
     
     {{#append "scripts"}}
         {{#if debug}}
-            {{#if livereload}}<script src="//localhost:4000/livereload.js"></script>{{/if}}
+            {{#if livereload}}<script src="http://white-harbor-nodejs-61041.usw1.actionbox.io:4000/livereload.js"></script>{{/if}}
             <script type="text/javascript" data-main="js/app.js" src="libraries/requirejs/require.js"></script>
-            {{#block "JSmodule"}}{{/block}}
         {{else}}
             <script type="text/javascript" src="js/{{jsbundle}}"></script>
         {{/if}}

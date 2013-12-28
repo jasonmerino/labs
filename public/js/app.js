@@ -22,14 +22,18 @@ require.config({
         'lib/underscore/underscore': ['lib/bootstrap/dist/js/bootstrap'],
         'lib/bootstrap/dist/js/bootstrap': ['lib/jquery/jquery'],
         'lib/jquery/jquery': []
-    }
+    },
+	
+	callback: function() {
+		// Implement Global namespacing
+		// Global Variable 'application'
+		// application.namespace(<String> (namespace), <Clazz>(Constructor Function from Backbone)).
+		initializer();
+	}
 
 });
 
 /**
-*    Error Handling
+*    Decide if we use Global Error Handling
 **/
-requirejs.onError = function(err) {
-    console.log("RequireTypeError: ", err.requireType);
-    if (err.requireType === 'timeout') console.log('Modules: ' + err.requireModules);
-};
+/** requirejs.onError = function(err) { console.log("RequireTypeError: ", err); }; **/

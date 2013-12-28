@@ -5,13 +5,13 @@
 *    @dependencies <ListOfDependencies>
 *    @desc <Description>
 **/
-define([], function() {
+define(['lib/backbone/backbone'], function() {
     
     /**
     *    @class <%= cname %>Service
     *    @classdesc <ClassDescription>
     **/
-    var <%= cname %>Service = Backbone.Service.extend({
+    var <%= cname %>Service = Backbone.Model.extend({
         
         /**
         *    @constructor

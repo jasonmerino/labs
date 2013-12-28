@@ -22,11 +22,11 @@ var <%= cname %> = Router.extend({
     
     /**
     *    Routes Definition
-    *    @var {Object} routes 
+    *    @var {Array} routes 
     **/
-    routes: {
-        { '/<%= name %>', verb: 'get', method: '<%= name %>' }
-    },
+    routes: [
+        { url: '/<%= name %>', verb: 'get', method: '<%= name %>' }
+    ],
     
     /**
     *    @constructor
