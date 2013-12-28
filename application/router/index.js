@@ -24,18 +24,29 @@ var Router = Labs.Service.extend({
     **/
     initialize: function(opts) {
         if(!opts.app || !opts.path) throw new Error('Router Class requires an app (express) and path in order to work.');
-        this._process();
-        this._injectServices();
+		this._loadHelpers();
+        this._loadRoutes();
+        this._loadServices();
         return this;
     },
-    
+	
+	/**
+	*	Load Helpers defined in the current router.
+	*	@private
+	*	@method _loadHelpers
+	*    @desc TODO
+	**/
+	_loadHelpers: function() {
+		// TODO: Research how we implement handlebar helpers and injected into the service/controllers
+	},
+	
     /**
-    *    Process Routers
+    *    Load Routers
     *    @private
-    *    @method _process
+    *    @method _loadRoutes
     *    @desc TODO
     **/
-    _process: function() {
+    _loadRoutes: function() {
 		console.log('\n');
         if(this.routes) {
             console.log(('-> Routes for [' + this.viewPath + ']'));
@@ -54,17 +65,26 @@ var Router = Labs.Service.extend({
     },
     
     /**
-    *    Inject Services into routes.
+    *    Load Services into Routers
     *    @private
-    *    @method _injectServices
+    *    @method _loadServices
     *    @desc TODO
     **/
-    _injectServices: function() {
-        // TODO
+    _loadServices: function() {
+		if(this.services && _.isArray(this.services)) {
+			_.each(this.services, function(s) {
+				try {
+					var ServiceClazz = require('../service/' + s);
+					if(serviceClazz) this[s] = new ServiceClazz();
+				} catch(ex) {
+					console.log('Service: ' + s + ' not found.');
+				}
+			}, this);
+		}
     },
     
     /**
-    *    Render
+    *    Render View through Handlebars.
     *    @public
     *    @method render
     *    @desc TODO
@@ -88,6 +108,7 @@ var Router = Labs.Service.extend({
     *    @param opts {Object}
     **/
     configure: function(opts) {
+		if(opts.hbslayout) this.layout = opts.hbslayout;
         var files = Directory.walk(opts.path);
         if(files) {
             _.each(files, function(f) {
@@ -100,7 +121,19 @@ var Router = Labs.Service.extend({
                 }
             }, this);  
         }
-    }
+		return this;
+    },
+	
+	/**
+	*	Load HandleBar Layouts as Partials
+	*	@static
+	*	@method loadLayouts
+	*	@param hbs {Object}
+	**/
+	loadLayouts: function() {
+		this.layout.registerPartial('master', fs.readFileSync('application/view/master.hbs', 'utf8'));
+		this.layout.registerPartial('layout', fs.readFileSync('application/view/layout.hbs', 'utf8'));	
+	}
     
 });
 
