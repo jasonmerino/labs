@@ -2,5 +2,6 @@ node_modules/
 application-cov/
 public/libraries/
 public/js/labs*.js
+public/css/**/*
 public/coverage/coverage.html
 .sass-cache/

@@ -10,6 +10,16 @@ var env = require('./config/env'),
 	app = express();
 
 /**
+*	HandleBars layout ISSUE:
+*	With the current implementation, we have 2 layout templates that are being injected dynamically with the following view hierarchy strategy:
+*	layout.hbs -> master.hbs -> [page].hbs
+*	This issue occurs when the live reload feature (watch task) is activated and the server is running in dev mode.
+*	Diagnostic: layout and master hbs files are being loaded (or compiled) as handlebars partials 'only once' when the server starts.
+*	After that, these ones are stored in memory by the handlebars engine. So, any changes applied to these templates in real time are not being reflected after a live reload event.
+*	Possible Solution: Research to see if it's possible to execute a some sort of reload mechanism to update the compiled files with the new ones when a live reload event occurs.
+**/
+
+/**
 *    Application Configure
 **/
 app.configure(function() {
