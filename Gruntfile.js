@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     var colors = require('colors'),
         env = require('./config/env'),
         _ = grunt.util._,
-        nodeprocess = null;
+        np = null;
     
 	// Project configuration.
 	grunt.initConfig({
@@ -48,15 +48,11 @@ module.exports = function(grunt) {
             add_banner: {
                 options: {
                     banner: '/* <%= pkg.name %> | <%= grunt.template.today("mm-dd-yyyy") %> */'
-                }  
-            },
-            minify: {
-                expand: true,
-                cwd: 'public/css/',
-                src: ['*.css', '!*.min.css'],
-                dest: 'public/css/',
-                ext: '.min.css'
-            }  
+                },
+                files: {
+                    'public/css/<%= pkg.name %>-<%= pkg.version %>.min.css': ['public/css/**/*.css', 'public/css/!*.min.css']
+                }
+            }
         },
         requirejs: {
             compile: {
@@ -80,7 +76,7 @@ module.exports = function(grunt) {
         },
         build: {
             options: {
-                tasks: ['sass', 'cssmin', 'requirejs']
+                tasks: ['sass', 'cssmin:add_banner', 'requirejs']
             }
         },
         watch: {
@@ -136,16 +132,22 @@ module.exports = function(grunt) {
         // Build done
         grunt.event.once('build:success', _.bind(function() {
             var args = [cfg.appfile];
-            if(env.debug) args.push('debug');
+			if(env.debug) args.push('debug');
             if(env.livereload) grunt.task.run('watch');
-            if(nodeprocess) nodeprocess.kill();
-            nodeprocess = grunt.util.spawn({ cmd: 'node', args: args, opts: { stdio: 'inherit' } });
+            if(np) nodeprocess.kill();
+            np = grunt.util.spawn({ cmd: 'node', args: args, opts: { stdio: 'inherit' } });
             grunt.log.writeln('Completed Application Run.'.cyan);
         }, this));
         
         grunt.log.writeln('Executing Application Run -> '.yellow);
         grunt.task.run('test');
     });
+    
+    /** Listen Grunt Quit Signal (ctrl + c) -> Force to Kill Node Process spawn by Grunt **/
+    process.on('SIGINT', _.bind(function() {
+        console.log('\n Grunt Terminated.');
+        if(np) { np.kill('SIGKILL'); process.exit(0); }
+    }, this));
     
     // Default task(s).
 	grunt.registerTask('default', ['run']);

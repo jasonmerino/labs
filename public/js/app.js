@@ -25,13 +25,16 @@ require.config({
     },
 	
 	callback: function() {
-		// Implement Global namespacing
-		// Global Variable 'application'
-		// application.namespace(<String> (namespace), <Clazz>(Constructor Function from Backbone)).
-		initializer();
+		console.log('callback args: ', arguments);
 	}
 
 });
+
+/**
+*	PageView initializer
+*   FIXME: Still need to figure out JS strategy...
+**/
+require(app.deps, function(M, V, C, S) { var module = V.run({ model: new M(), controller: new C({ service: new S() }) }).render(); });
 
 /**
 *    Decide if we use Global Error Handling

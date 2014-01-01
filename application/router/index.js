@@ -95,6 +95,9 @@ var Router = Labs.Service.extend({
         if(!opts.action) throw new Error('\'action\' parameter is required in order to render the view properly.');
         if(!opts.model) opts.model = {};
         
+		// Reload 'Layouts' if in development mode as partials (This is quite expensive operation for production environments)
+		if(this.get('env').debug) Router.loadLayouts();
+		
         var params = { action: opts.action, title: _s.capitalize(opts.action), path: this.viewPath, model: opts.model };
         res.render(this.viewPath + '/' + opts.action, params);
     }
@@ -108,7 +111,7 @@ var Router = Labs.Service.extend({
     *    @param opts {Object}
     **/
     configure: function(opts) {
-		if(opts.hbslayout) this.layout = opts.hbslayout;
+		if(opts.layout) this.layout = opts.layout;
         var files = Directory.walk(opts.path);
         if(files) {
             _.each(files, function(f) {
@@ -125,14 +128,15 @@ var Router = Labs.Service.extend({
     },
 	
 	/**
-	*	Load HandleBar Layouts as Partials
-	*	@static
-	*	@method loadLayouts
-	*	@param hbs {Object}
-	**/
+    *    Load Layouts
+    *    @static
+    *    @method loadLayouts
+    **/
 	loadLayouts: function() {
-		this.layout.registerPartial('master', fs.readFileSync('application/view/master.hbs', 'utf8'));
-		this.layout.registerPartial('layout', fs.readFileSync('application/view/layout.hbs', 'utf8'));	
+		if(this.layout) {
+			this.layout.registerPartial('master', fs.readFileSync('application/view/layouts/master.hbs', 'utf8'));
+			this.layout.registerPartial('layout', fs.readFileSync('application/view/layouts/layout.hbs', 'utf8'));	
+		}
 	}
     
 });

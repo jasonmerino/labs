@@ -1,4 +1,5 @@
 var env = require('./config/env'),
+	pkg = require('./package.json'),
     fs = require('fs'),
     path = require('path'),
 	util = require('util'),
@@ -8,16 +9,6 @@ var env = require('./config/env'),
     Labs = require('./application/util/class'),
     router = require('./application/router'),
 	app = express();
-
-/**
-*	HandleBars layout ISSUE:
-*	With the current implementation, we have 2 layout templates that are being injected dynamically with the following view hierarchy strategy:
-*	layout.hbs -> master.hbs -> [page].hbs
-*	This issue occurs when the live reload feature (watch task) is activated and the server is running in dev mode.
-*	Diagnostic: layout and master hbs files are being loaded (or compiled) as handlebars partials 'only once' when the server starts.
-*	After that, these ones are stored in memory by the handlebars engine. So, any changes applied to these templates in real time are not being reflected after a live reload event.
-*	Possible Solution: Research to see if it's possible to execute a some sort of reload mechanism to update the compiled files with the new ones when a live reload event occurs.
-**/
 
 /**
 *    Application Configure
@@ -35,7 +26,7 @@ app.configure(function() {
     app.enable('strict routing');
     
     /** Process Routes **/
-	router.configure({ app: app, path: path.resolve(__dirname, 'application/router'), hbslayout: hbslayout }).loadLayouts();
+	router.configure({ app: app, env: env, path: path.resolve(__dirname, 'application/router'), layout: hbslayout }).loadLayouts();
     
     /** Variables added into Handlerbars template engine **/
     app.locals.debug = env.debug;
@@ -43,15 +34,21 @@ app.configure(function() {
     
     /** Static Files Express Handler **/
     app.use(express.static(path.resolve(__dirname, 'public')));
-    
+	
+	/** Application Name and Version **/
+	app.locals.appname = pkg.name || 'app';
+	app.locals.version = pkg.version || 'unknown';
+	
     app.configure('development', function() {
         console.log('\nRunning on Development Environment >');
+		/** Logging **/
         app.use(express.logger('development'));
         app.use(express.errorHandler({ dumExceptions: true, showStack: true }));
     });
     
     app.configure('production', function() {
         console.log('\nRunning on Production Environment >');
+		/** Logging **/
 		app.use(express.logger('production'));
         app.use(express.errorHandler());
     });
