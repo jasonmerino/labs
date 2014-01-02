@@ -83,7 +83,7 @@ module.exports = function(grunt) {
             css: {
                 files: ['application/sass/**/*.scss'],
                 tasks: ['sass'],
-                options: { livereload: 4000 } // Start a live reload server on the default port 35729
+                options: { livereload: 4000 }
             },
             views: {
                 files: ['application/view/**/*.hbs'],
@@ -96,6 +96,12 @@ module.exports = function(grunt) {
                options: { livereload: 4000 }
             }
         },
+		cluster: {
+			options: {
+				clusterPort: '9090',
+				seaport: 6060
+			}
+		},
         run: {
             options: {
                 appfile: 'server.js'
@@ -107,6 +113,7 @@ module.exports = function(grunt) {
     grunt.loadTasks('lib/scaffold');
     grunt.loadTasks('lib/unittest');
     grunt.loadTasks('lib/build');
+	grunt.loadTasks('lib/cluster');
     
 	// Load plugins
     grunt.loadNpmTasks('grunt-contrib-sass');
