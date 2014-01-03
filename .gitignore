@@ -1,3 +1,7 @@
 node_modules/
+application-cov/
 public/libraries/
-public/getting-started/js/labs*.js
+public/js/labs*.js
+public/css/**/*
+public/coverage/coverage.html
+.sass-cache/

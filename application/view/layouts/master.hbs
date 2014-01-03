@@ -1,0 +1,51 @@
+{{#extend "layout"}}
+
+    {{#append "head"}}
+        <head>
+            <title>Labs | {{title}}</title>
+            <meta charset="utf-8">
+            {{#if debug}}
+                <link href="libraries/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+                <link href="css/common.css" rel="stylesheet" type="text/css" />
+                <link href="css/{{action}}/{{action}}.css" rel="stylesheet" type="text/css" />
+            {{else}}
+                <link href="libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+                <link href="css/{{appname}}-{{version}}.css" rel="stylesheet" type="text/css" />
+            {{/if}}
+            <link rel="shortcut icon" href="/images/favicon.ico" />
+        </head>
+    {{/append}}
+    
+    {{#append "body"}}
+        <div id="header" class="header">
+            {{#block "header"}}{{/block}}
+        </div>
+        <div id="content" class="content">
+            {{#block "content"}}{{/block}}
+        </div>
+        <div id="footer" class="footer">
+            {{#block "footer"}}{{/block}}
+        </div>
+    {{/append}}
+    
+    {{#append "scripts"}}
+        {{#if debug}}
+            {{#if livereload}}<script src="http://white-harbor-nodejs-61041.usw1.actionbox.io:4000/livereload.js"></script>{{/if}}
+            <script type="text/javascript" data-main="js/app.js" src="libraries/requirejs/require.js"></script>
+        {{else}}
+            <script type="text/javascript" src="js/{{appname}}-{{version}}.js"></script>
+        {{/if}}
+		<script type="text/javascript">
+			var app = {
+				version: '{{version}}',
+				name: '{{appname}}',
+				page: '{{action}}',
+				deps: ['model/{{action}}/{{action}}_model', 'view/{{action}}/{{action}}_view', 'controller/{{action}}/{{action}}_controller', 'service/{{action}}/{{action}}_service'],
+				namespace: function(ns, c) {
+					// TODO
+				}
+			};
+		</script>
+    {{/append}}
+    
+{{/extend}}

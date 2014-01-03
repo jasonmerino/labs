@@ -1,0 +1,26 @@
+html, body, h1, h2, h3, h4, h5, h6, p, a, div, ul, li, form, filedset, label, input, img {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box; }
+
+body {
+  font: 100% Helvetica, sans-serif;
+  color: #333333; }
+
+.header {
+  font-size: 12px;
+  padding: 5px;
+  width: 100%; }
+
+.content {
+  font-size: 11px;
+  padding: 5px;
+  width: 100%; }
+
+.footer {
+  font-size: 11px;
+  padding: 5px;
+  width: 100%; }
